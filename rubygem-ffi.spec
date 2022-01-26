@@ -1,12 +1,13 @@
 %global gem_name ffi
 Name:                rubygem-%{gem_name}
 Version:             1.10.0
-Release:             1
+Release:             2
 Summary:             FFI Extensions for Ruby
 License:             BSD
 URL:                 https://www.github.com/ffi/ffi
 Source0:             https://rubygems.org/gems/%{gem_name}-%{version}.gem
 Source1:             https://www.github.com/ffi/%{gem_name}/archive/%{version}.tar.gz
+Patch0:              Remove-taint-support.patch
 BuildRequires:       ruby(release) rubygems-devel ruby-devel gcc libffi-devel rubygem(rspec)
 %description
 Ruby-FFI is a ruby extension for programmatically loading dynamic
@@ -26,6 +27,7 @@ Documentation for %{name}.
 %setup -q -n  %{gem_name}-%{version} -b 1
 ln -s %{gem_name}-%{version}/test test
 ln -s %{gem_name}-%{version}/spec spec
+%patch0 -p1
 
 %build
 gem build ../%{gem_name}-%{version}.gemspec
@@ -70,5 +72,8 @@ popd
 %{gem_instdir}/ffi.gemspec
 
 %changelog
+* Wed Jan 26 2022 liyanan <liyanan32@huawei.com> - 1.10.0-2
+- Remove taint support
+
 * Thu Aug 20 2020 xiezheng <xiezheng4@huawei.com> - 1.10.0-1
 - package init
