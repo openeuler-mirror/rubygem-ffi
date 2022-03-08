@@ -8,6 +8,7 @@ URL:                 https://www.github.com/ffi/ffi
 Source0:             https://rubygems.org/gems/%{gem_name}-%{version}.gem
 Source1:             https://www.github.com/ffi/%{gem_name}/archive/%{version}.tar.gz
 Patch0:              Remove-taint-support.patch
+Patch1:              Add-riscv-typesconf.patch
 BuildRequires:       ruby(release) rubygems-devel ruby-devel gcc libffi-devel rubygem(rspec)
 %description
 Ruby-FFI is a ruby extension for programmatically loading dynamic
@@ -28,6 +29,7 @@ Documentation for %{name}.
 ln -s %{gem_name}-%{version}/test test
 ln -s %{gem_name}-%{version}/spec spec
 %patch0 -p1
+%patch1 -p1
 
 %build
 gem build ../%{gem_name}-%{version}.gemspec
@@ -39,11 +41,13 @@ cp -a .%{gem_dir}/* \
         %{buildroot}%{gem_dir}/
 mkdir -p %{buildroot}%{gem_extdir_mri}
 cp -a .%{gem_extdir_mri}/{gem.build_complete,*.so} %{buildroot}%{gem_extdir_mri}/
+pwd
 rm -rf %{buildroot}%{gem_instdir}/ext/
 
 %check
 pushd .%{gem_instdir}
 ln -s %{_builddir}/%{gem_name}-%{version}/spec spec
+cp -r %{_builddir}/%{gem_name}-%{version}/lib/ffi/platform/riscv64-linux/ ./lib/ffi/platform/
 pushd spec/ffi/fixtures
 make JFLAGS="%{optflags}"
 popd
