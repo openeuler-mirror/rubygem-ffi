@@ -1,3 +1,9 @@
+Source: commit/3a280f70a36b56239d149d6205d20933151a2af3
+Author: Andreas Schwab <schwab@suse.de>
+Date:   Thu Feb 25 12:17:32 2021 +0100
+
+    Add types.conf for riscv64-linux
+
 diff -Nur a/lib/ffi/platform/riscv64-linux/types.conf b/lib/ffi/platform/riscv64-linux/types.conf
 --- a/lib/ffi/platform/riscv64-linux/types.conf	1970-01-01 08:00:00.000000000 +0800
 +++ b/lib/ffi/platform/riscv64-linux/types.conf	2022-02-28 12:10:35.462892020 +0800
