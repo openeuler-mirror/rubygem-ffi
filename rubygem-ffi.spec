@@ -1,7 +1,7 @@
 %global gem_name ffi
 Name:                rubygem-%{gem_name}
 Version:             1.10.0
-Release:             2
+Release:             3
 Summary:             FFI Extensions for Ruby
 License:             BSD
 URL:                 https://www.github.com/ffi/ffi
@@ -41,7 +41,6 @@ cp -a .%{gem_dir}/* \
         %{buildroot}%{gem_dir}/
 mkdir -p %{buildroot}%{gem_extdir_mri}
 cp -a .%{gem_extdir_mri}/{gem.build_complete,*.so} %{buildroot}%{gem_extdir_mri}/
-pwd
 rm -rf %{buildroot}%{gem_instdir}/ext/
 
 %check
@@ -76,6 +75,9 @@ popd
 %{gem_instdir}/ffi.gemspec
 
 %changelog
+* Tues Mar 8 2022 zzzum <ovezjin@outlook.com> - 1.10.0-3
+- Add riscv types conf
+
 * Wed Jan 26 2022 liyanan <liyanan32@huawei.com> - 1.10.0-2
 - Remove taint support
 
