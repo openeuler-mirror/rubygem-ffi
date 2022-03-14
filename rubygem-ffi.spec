@@ -1,13 +1,14 @@
 %global gem_name ffi
 Name:                rubygem-%{gem_name}
 Version:             1.10.0
-Release:             2
+Release:             3
 Summary:             FFI Extensions for Ruby
 License:             BSD
 URL:                 https://www.github.com/ffi/ffi
 Source0:             https://rubygems.org/gems/%{gem_name}-%{version}.gem
 Source1:             https://www.github.com/ffi/%{gem_name}/archive/%{version}.tar.gz
 Patch0:              Remove-taint-support.patch
+Patch1:              Add-riscv-typesconf.patch
 BuildRequires:       ruby(release) rubygems-devel ruby-devel gcc libffi-devel rubygem(rspec)
 %description
 Ruby-FFI is a ruby extension for programmatically loading dynamic
@@ -28,6 +29,7 @@ Documentation for %{name}.
 ln -s %{gem_name}-%{version}/test test
 ln -s %{gem_name}-%{version}/spec spec
 %patch0 -p1
+%patch1 -p1
 
 %build
 gem build ../%{gem_name}-%{version}.gemspec
@@ -44,6 +46,7 @@ rm -rf %{buildroot}%{gem_instdir}/ext/
 %check
 pushd .%{gem_instdir}
 ln -s %{_builddir}/%{gem_name}-%{version}/spec spec
+cp -r %{_builddir}/%{gem_name}-%{version}/lib/ffi/platform/riscv64-linux/ ./lib/ffi/platform/
 pushd spec/ffi/fixtures
 make JFLAGS="%{optflags}"
 popd
@@ -72,6 +75,9 @@ popd
 %{gem_instdir}/ffi.gemspec
 
 %changelog
+* Tues Mar 8 2022 zzzum <ovezjin@outlook.com> - 1.10.0-3
+- Add riscv types conf
+
 * Wed Jan 26 2022 liyanan <liyanan32@huawei.com> - 1.10.0-2
 - Remove taint support
 
