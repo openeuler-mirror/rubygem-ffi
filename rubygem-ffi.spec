@@ -1,7 +1,7 @@
 %global gem_name ffi
 Name:                rubygem-%{gem_name}
 Version:             1.10.0
-Release:             3
+Release:             4
 Summary:             FFI Extensions for Ruby
 License:             BSD
 URL:                 https://www.github.com/ffi/ffi
@@ -34,6 +34,7 @@ ln -s %{gem_name}-%{version}/spec spec
 %build
 gem build ../%{gem_name}-%{version}.gemspec
 %gem_install
+cp -r ./lib/ffi/platform/riscv64-linux/ ./%{gem_instdir}/lib/ffi/platform/
 
 %install
 mkdir -p %{buildroot}%{gem_dir}
@@ -46,7 +47,6 @@ rm -rf %{buildroot}%{gem_instdir}/ext/
 %check
 pushd .%{gem_instdir}
 ln -s %{_builddir}/%{gem_name}-%{version}/spec spec
-cp -r %{_builddir}/%{gem_name}-%{version}/lib/ffi/platform/riscv64-linux/ ./lib/ffi/platform/
 pushd spec/ffi/fixtures
 make JFLAGS="%{optflags}"
 popd
@@ -75,6 +75,9 @@ popd
 %{gem_instdir}/ffi.gemspec
 
 %changelog
+* Wed Sep 14 2022 laokz <laokz@foxmail.com> - 1.10.0-4
+- Pack lost riscv files of last commit
+
 * Tues Mar 8 2022 zzzum <ovezjin@outlook.com> - 1.10.0-3
 - Add riscv types conf
 
